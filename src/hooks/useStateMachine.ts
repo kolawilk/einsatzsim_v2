@@ -18,6 +18,17 @@ export const STATE_SEQUENCE: StateMachineState[] = [
 
 const getInitialState = (): StateMachineState => "idle";
 
+// Audio config type for state machine - uses audio-specific properties
+export type AudioConfigEntry = {
+  sound_in?: string | string[];
+  sound_floor?: string | string[];
+  sound_random?: string | string[];
+  sound_sequence?: string | string[];
+  sound_out?: string | string[];
+  auto_advance?: boolean;
+  duration_ms?: number;
+};
+
 export function useStateMachine(options: StateMachineOptions = {}) {
   const { autoAdvance = false, onStateChange } = options;
   const { playStateAudio, playExitAudio, stopAllAudio } = useAudio();
@@ -25,16 +36,6 @@ export function useStateMachine(options: StateMachineOptions = {}) {
   const [state, setState] = useState<StateMachineState>(getInitialState);
   const [history, setHistory] = useState<StateMachineState[]>(["idle"]);
   const historyRef = useRef<StateMachineState[]>(["idle"]);
-  // Audio config type for state machine - uses audio-specific properties
-  type AudioConfigEntry = {
-    sound_in?: string | string[];
-    sound_floor?: string | string[];
-    sound_random?: string | string[];
-    sound_sequence?: string | string[];
-    sound_out?: string | string[];
-    auto_advance?: boolean;
-    duration_ms?: number;
-  };
   const [audioConfig, setAudioConfig] = useState<Record<StateMachineState, AudioConfigEntry>>({
     idle: {},
     calling: {},
@@ -132,7 +133,7 @@ export function useStateMachine(options: StateMachineOptions = {}) {
   };
 
   // Set audio configuration for states
-  const setAudioConfigs = useCallback((configs: Record<StateMachineState, any>) => {
+  const setAudioConfigs = useCallback((configs: Record<StateMachineState, AudioConfigEntry>) => {
     setAudioConfig(configs);
   }, []);
 

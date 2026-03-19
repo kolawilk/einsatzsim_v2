@@ -1,0 +1,51 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e6] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e7]:
+      - img [ref=e8]
+    - generic [ref=e11]:
+      - button "Open issues overlay" [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: "6"
+          - generic [ref=e15]: "7"
+        - generic [ref=e16]:
+          - text: Issue
+          - generic [ref=e17]: s
+      - button "Collapse issues badge" [ref=e18]:
+        - img [ref=e19]
+  - generic [ref=e22]:
+    - heading "Einsatzanzeige" [level=1] [ref=e23]
+    - generic [ref=e24]:
+      - generic [ref=e25]: 🏠
+      - heading "idle" [level=2] [ref=e26]
+      - paragraph [ref=e27]: Warte auf Einsatz
+      - paragraph [ref=e28]: Schritt 1 von 6
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - paragraph [ref=e31]: "Verlauf:"
+        - paragraph [ref=e32]: idle
+      - generic [ref=e33]:
+        - generic [ref=e34]: "Kann zurückgehen: Nein"
+        - generic [ref=e35]: "Kann vorwärts: Ja"
+    - generic [ref=e36]:
+      - button "← Zurück" [disabled]
+      - button "Weiter →" [ref=e37]
+    - generic [ref=e38]:
+      - button "Überspringen" [ref=e39]
+      - button "Reset" [ref=e40]
+    - generic [ref=e41]:
+      - heading "Direktwahl:" [level=3] [ref=e42]
+      - generic [ref=e43]:
+        - button "idle" [ref=e44]
+        - button "calling" [ref=e45]
+        - button "alerting" [ref=e46]
+        - button "deploying" [ref=e47]
+        - button "arriving" [ref=e48]
+        - button "returning" [ref=e49]
+    - button "Einstellungen" [ref=e51]:
+      - button "Einstellungen" [ref=e52]:
+        - img
+  - alert [ref=e53]
+```

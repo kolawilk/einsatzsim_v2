@@ -1,6 +1,6 @@
 "use client";
 
-import { useStateMachine } from "@/hooks/useStateMachine";
+import { useStateMachine, type AudioConfigEntry } from "@/hooks/useStateMachine";
 import type { StateMachineState } from "@/types";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui";
@@ -82,7 +82,7 @@ export function MissionView({
         sound_floor: ["/audio/ambient_return.mp3"],
       },
     };
-    setAudioConfigs(audioConfigs as any);
+    setAudioConfigs(audioConfigs as Record<StateMachineState, AudioConfigEntry>);
   }, [setAudioConfigs]);
 
   const handleSettingsChange = (newSettings: Settings) => {
