@@ -152,7 +152,7 @@ export function MissionView({
       <div className="mb-8 w-full max-w-md">
         <h3 className="font-semibold mb-2 text-center">Direktwahl:</h3>
         <div className="flex flex-wrap justify-center gap-2">
-          {STATE_SEQUENCE.map((s) => (
+          {STATE_SEQUENCE.map((s: string) => (
             <Button
               key={s}
               onClick={() => goToState(s)}
