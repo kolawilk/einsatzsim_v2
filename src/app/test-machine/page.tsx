@@ -26,7 +26,7 @@ export default function TestMachinePage() {
     canGoForward,
   } = useStateMachine({
     autoAdvance: false,
-    onStateChange: (newState, previousState) => {
+    onStateChange: (newState: string, previousState: string) => {
       console.log(`State changed: ${previousState} → ${newState}`);
     },
   });
@@ -48,54 +48,63 @@ export default function TestMachinePage() {
 
       {/* Context Info */}
       <div className="mb-8 p-4 bg-white dark:bg-zinc-900 rounded-lg shadow">
-        <p>History: {context.history.join(" → ")}</p>
-        <p className="text-sm text-zinc-500">
-          Can go back: {canGoBack} | Can go forward: {canGoForward}
-        </p>
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-semibold">Verlauf:</p>
+          <p className="text-zinc-600 dark:text-zinc-300 font-mono">
+            {context.history.length > 0 ? context.history.join(" → ") : "Kein Verlauf"}
+          </p>
+        </div>
+        <div className="mt-2 flex justify-between text-sm text-zinc-500">
+          <span>Kann zurückgehen: {canGoBack ? "Ja" : "Nein"}</span>
+          <span>Kann vorwärts: {canGoForward ? "Ja" : "Nein"}</span>
+        </div>
       </div>
 
       {/* Controls */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
+      <div className="flex flex-wrap justify-center gap-2 mb-8 w-full max-w-md">
         <button
           onClick={goPrev}
           disabled={!canGoBack}
-          className="px-4 py-2 bg-zinc-200 dark:bg-zinc-800 rounded disabled:opacity-50"
+          className="flex-1 px-4 py-2 border rounded hover:bg-gray-100 dark:hover:bg-zinc-800 disabled:opacity-50"
         >
-          ← Prev
+          ← Zurück
         </button>
         <button
           onClick={goNext}
           disabled={!canGoForward}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          Next →
+          Weiter →
         </button>
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-2 mb-8 w-full max-w-md">
         <button
           onClick={skip}
-          className="px-4 py-2 bg-amber-500 text-white rounded"
+          className="flex-1 px-4 py-2 border rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
         >
-          Skip
+          Überspringen
         </button>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-red-500 text-white rounded"
+          className="flex-1 px-4 py-2 border rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
         >
           Reset
         </button>
       </div>
 
       {/* Direct State Selection */}
-      <div className="mb-8">
-        <h3 className="font-semibold mb-2">Jump to State:</h3>
+      <div className="mb-8 w-full max-w-md">
+        <h3 className="font-semibold mb-2 text-center">Direktwahl:</h3>
         <div className="flex flex-wrap justify-center gap-2">
-          {(Object.keys(STATE_ICONS) as string[]).map((s) => (
+          {STATE_SEQUENCE.map((s) => (
             <button
               key={s}
-              onClick={() => goToState(s as any)}
-              className={`px-3 py-1 rounded ${
+              onClick={() => goToState(s)}
+              className={`px-4 py-2 rounded ${
                 state === s
-                  ? "bg-blue-500 text-white"
-                  : "bg-zinc-200 dark:bg-zinc-800"
+                  ? "bg-blue-600 text-white"
+                  : "border hover:bg-gray-100 dark:hover:bg-zinc-800"
               }`}
             >
               {s}
@@ -105,14 +114,16 @@ export default function TestMachinePage() {
       </div>
 
       {/* Settings */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900 rounded-lg shadow">
+        <label htmlFor="autoAdvance" className="font-medium">
+          Automatisch weiter
+        </label>
         <input
-          type="checkbox"
           id="autoAdvance"
+          type="checkbox"
           checked={autoAdvance}
           onChange={(e) => setAutoAdvance(e.target.checked)}
         />
-        <label htmlFor="autoAdvance">Auto-advance (placeholder)</label>
       </div>
     </div>
   );
