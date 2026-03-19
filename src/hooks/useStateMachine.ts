@@ -5,7 +5,7 @@ import type {
   StateMachineOptions,
 } from "@/types";
 
-const STATE_SEQUENCE: StateMachineState[] = [
+export const STATE_SEQUENCE: StateMachineState[] = [
   "idle",
   "calling",
   "alerting",

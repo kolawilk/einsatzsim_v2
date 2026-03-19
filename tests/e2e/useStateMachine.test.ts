@@ -13,7 +13,7 @@ test.describe("useStateMachine Hook", () => {
 
   test("can navigate to next state", async ({ page }) => {
     // Click Next button
-    await page.getByRole("button", { name: "Next →" }).click();
+    await page.getByRole("button", { name: "Weiter →" }).click();
 
     // Should now be in "calling" state
     await expect(page.getByRole("heading", { name: "calling" })).toBeVisible();
@@ -33,25 +33,25 @@ test.describe("useStateMachine Hook", () => {
 
       // Check if we're at the last state
       if (i < states.length - 1) {
-        await page.getByRole("button", { name: "Next →" }).click();
+        await page.getByRole("button", { name: "Weiter →" }).click();
       }
     }
   });
 
   test("can go back to previous state", async ({ page }) => {
     // Go to calling state
-    await page.getByRole("button", { name: "Next →" }).click();
+    await page.getByRole("button", { name: "Weiter →" }).click();
     await expect(page.getByRole("heading", { name: "calling" })).toBeVisible();
 
     // Go back to idle
-    await page.getByRole("button", { name: "← Prev" }).click();
+    await page.getByRole("button", { name: "← Zurück" }).click();
     await expect(page.getByRole("heading", { name: "idle" })).toBeVisible();
   });
 
   test("reset button returns to idle state", async ({ page }) => {
     // Navigate to returning state
     for (let i = 0; i < 5; i++) {
-      await page.getByRole("button", { name: "Next →" }).click();
+      await page.getByRole("button", { name: "Weiter →" }).click();
     }
     await expect(page.getByRole("heading", { name: "returning" })).toBeVisible();
 
@@ -62,7 +62,7 @@ test.describe("useStateMachine Hook", () => {
 
   test("skip button works correctly", async ({ page }) => {
     // Skip from idle to calling
-    await page.getByRole("button", { name: "Skip" }).click();
+    await page.getByRole("button", { name: "Überspringen" }).click();
     await expect(page.getByRole("heading", { name: "calling" })).toBeVisible();
   });
 
@@ -75,12 +75,12 @@ test.describe("useStateMachine Hook", () => {
 
   test("history is tracked correctly", async ({ page }) => {
     // Navigate through a few states
-    await page.getByRole("button", { name: "Next →" }).click();
-    await page.getByRole("button", { name: "Next →" }).click();
+    await page.getByRole("button", { name: "Weiter →" }).click();
+    await page.getByRole("button", { name: "Weiter →" }).click();
 
     // Check history
     await expect(
-      page.getByText(/History: idle → calling → alerting/)
+      page.getByText(/Verlauf: idle → calling → alerting/)
     ).toBeVisible();
   });
 });
@@ -97,7 +97,7 @@ test.describe("useStateMachine Hook - Mobile", () => {
   });
 
   test("buttons are tappable on mobile", async ({ page }) => {
-    await page.getByRole("button", { name: "Next →" }).click();
+    await page.getByRole("button", { name: "Weiter →" }).click();
     await expect(page.getByRole("heading", { name: "calling" })).toBeVisible();
   });
 });

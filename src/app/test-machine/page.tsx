@@ -2,6 +2,7 @@
 
 import { useStateMachine } from "@/hooks/useStateMachine";
 import { useState } from "react";
+import { STATE_SEQUENCE } from "@/hooks/useStateMachine";
 
 const STATE_ICONS: Record<string, string> = {
   idle: "🏠",

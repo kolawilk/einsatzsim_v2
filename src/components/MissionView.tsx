@@ -1,10 +1,10 @@
 "use client";
 
 import { useStateMachine } from "@/hooks/useStateMachine";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { SettingsDialog, loadSettings, type Settings } from "@/components/ui";
+import { SettingsIcon } from "lucide-react";
 
 interface MissionViewProps {
   title?: string;
@@ -23,9 +23,17 @@ const STATE_CONFIG: Record<string, { icon: string; label: string; description: s
 
 export function MissionView({
   title = "Einsatzanzeige",
-  autoAdvance = false,
+  autoAdvance: initialAutoAdvance = false,
   onStateChange,
 }: MissionViewProps) {
+  // Load settings from localStorage on mount
+  const [settings, setSettings] = useState<Settings>(() => {
+    const loaded = loadSettings();
+    return {
+      autoAdvance: initialAutoAdvance ?? loaded.autoAdvance,
+    };
+  });
+
   const {
     state,
     context,
@@ -40,16 +48,12 @@ export function MissionView({
     canGoForward,
     STATE_SEQUENCE,
   } = useStateMachine({
-    autoAdvance,
+    autoAdvance: settings.autoAdvance,
     onStateChange,
   });
 
-  const [isAutoAdvance, setIsAutoAdvance] = useState(autoAdvance);
-
-  const handleAutoAdvanceChange = (checked: boolean) => {
-    setIsAutoAdvance(checked);
-    // Note: autoAdvance is passed via props, so this is a UI-only toggle
-    // For a real implementation, you'd want to manage this state differently
+  const handleSettingsChange = (newSettings: Settings) => {
+    setSettings(newSettings);
   };
 
   return (
@@ -79,8 +83,8 @@ export function MissionView({
           </p>
         </div>
         <div className="mt-2 flex justify-between text-sm text-zinc-500">
-          <span>Can go back: {canGoBack ? "Ja" : "Nein"}</span>
-          <span>Can go forward: {canGoForward ? "Ja" : "Nein"}</span>
+          <span>Kann zurückgehen: {canGoBack ? "Ja" : "Nein"}</span>
+          <span>Kann vorwärts: {canGoForward ? "Ja" : "Nein"}</span>
         </div>
       </div>
 
@@ -129,14 +133,14 @@ export function MissionView({
         </div>
       </div>
 
-      {/* Settings */}
-      <div className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900 rounded-lg shadow">
-        <Label htmlFor="autoAdvance">Automatisch weiter</Label>
-        <Switch
-          id="autoAdvance"
-          checked={isAutoAdvance}
-          onCheckedChange={handleAutoAdvanceChange}
-        />
+      {/* Settings Dialog */}
+      <div className="mt-4">
+        <SettingsDialog onSettingsChange={handleSettingsChange}>
+          <Button variant="ghost" size="icon">
+            <SettingsIcon className="size-5" />
+            <span className="sr-only">Einstellungen</span>
+          </Button>
+        </SettingsDialog>
       </div>
     </div>
   );
