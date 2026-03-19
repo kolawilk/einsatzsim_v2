@@ -2,7 +2,7 @@
 
 import { useStateMachine } from "@/hooks/useStateMachine";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { SettingsDialog, loadSettings, type Settings } from "@/components/ui";
 import { SettingsIcon } from "lucide-react";
 
@@ -135,12 +135,7 @@ export function MissionView({
 
       {/* Settings Dialog */}
       <div className="mt-4">
-        <SettingsDialog onSettingsChange={handleSettingsChange}>
-          <Button variant="ghost" size="icon">
-            <SettingsIcon className="size-5" />
-            <span className="sr-only">Einstellungen</span>
-          </Button>
-        </SettingsDialog>
+        <SettingsDialog onSettingsChange={handleSettingsChange} />
       </div>
     </div>
   );

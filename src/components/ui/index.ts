@@ -3,3 +3,4 @@ export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 export { Label } from "./label"
 export { Switch } from "./switch"
 export { SettingsDialog, loadSettings, saveSettings } from "./settings-dialog"
+export type { Settings } from "./settings-dialog"

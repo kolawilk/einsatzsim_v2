@@ -48,12 +48,10 @@ function saveSettings(settings: Settings) {
 }
 
 interface SettingsDialogProps {
-  children?: React.ReactNode
   onSettingsChange?: (settings: Settings) => void
 }
 
 export function SettingsDialog({
-  children,
   onSettingsChange,
 }: SettingsDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -76,13 +74,10 @@ export function SettingsDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children || (
-          <Button variant="outline" size="icon">
-            <SettingsIcon className="size-5" />
-            <span className="sr-only">Einstellungen</span>
-          </Button>
-        )}
+      <DialogTrigger>
+        <Button variant="outline" size="icon" aria-label="Einstellungen">
+          <SettingsIcon className="size-5" />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -109,7 +104,7 @@ export function SettingsDialog({
         </div>
 
         <DialogFooter>
-          <DialogClose asChild>
+          <DialogClose>
             <Button type="button" variant="outline">
               Schließen
             </Button>
