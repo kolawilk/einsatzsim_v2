@@ -1,9 +1,11 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import type {
   StateMachineState,
   StateMachineContext,
   StateMachineOptions,
+  StateConfig,
 } from "@/types";
+import { useAudio } from "@/hooks/useAudio";
 
 export const STATE_SEQUENCE: StateMachineState[] = [
   "idle",
@@ -18,14 +20,41 @@ const getInitialState = (): StateMachineState => "idle";
 
 export function useStateMachine(options: StateMachineOptions = {}) {
   const { autoAdvance = false, onStateChange } = options;
+  const { playStateAudio, playExitAudio, stopAllAudio } = useAudio();
 
   const [state, setState] = useState<StateMachineState>(getInitialState);
   const [history, setHistory] = useState<StateMachineState[]>(["idle"]);
   const historyRef = useRef<StateMachineState[]>(["idle"]);
+  // Use a type assertion since StateConfig requires 'image' but we only care about audio config
+  const [audioConfig, setAudioConfig] = useState<Record<StateMachineState, any>>({
+    idle: {},
+    calling: {},
+    alerting: {},
+    deploying: {},
+    arriving: {},
+    returning: {},
+  });
 
   const currentStateIndex = STATE_SEQUENCE.indexOf(state);
   const canGoBack = currentStateIndex > 0;
   const canGoForward = currentStateIndex < STATE_SEQUENCE.length - 1;
+
+  // Play audio when state changes
+  useEffect(() => {
+    const previousState = history[history.length - 2] || null;
+    const config = audioConfig[state];
+    
+    if (config) {
+      playStateAudio(state, config as StateConfig, previousState);
+    }
+  }, [state, audioConfig, playStateAudio, history]);
+
+  // Stop all audio on unmount
+  useEffect(() => {
+    return () => {
+      stopAllAudio();
+    };
+  }, [stopAllAudio]);
 
   const transitionTo = useCallback(
     (newState: StateMachineState) => {
@@ -93,6 +122,11 @@ export function useStateMachine(options: StateMachineOptions = {}) {
     canGoForward,
   };
 
+  // Set audio configuration for states
+  const setAudioConfigs = useCallback((configs: Record<StateMachineState, any>) => {
+    setAudioConfig(configs);
+  }, []);
+
   return {
     // State
     state,
@@ -105,6 +139,9 @@ export function useStateMachine(options: StateMachineOptions = {}) {
     skip,
     goToState,
     goToIndex,
+
+    // Audio
+    setAudioConfigs,
 
     // Helpers
     STATE_SEQUENCE,

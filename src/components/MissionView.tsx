@@ -47,10 +47,42 @@ export function MissionView({
     canGoBack,
     canGoForward,
     STATE_SEQUENCE,
+    setAudioConfigs,
   } = useStateMachine({
     autoAdvance: settings.autoAdvance,
     onStateChange,
   });
+
+  // Set default audio configs for states (using placeholder audio)
+  useEffect(() => {
+    const audioConfigs: Record<string, { sound_in?: string; sound_floor?: string[] }> = {
+      idle: {
+        sound_in: "/audio/call_start.mp3",
+        sound_floor: ["/audio/ambient_idle.mp3"],
+      },
+      calling: {
+        sound_in: "/audio/call_received.mp3",
+        sound_floor: ["/audio/ambient_calling.mp3"],
+      },
+      alerting: {
+        sound_in: "/audio/alarm_start.mp3",
+        sound_floor: ["/audio/ambient_alert.mp3", "/audio/siren_fade.mp3"],
+      },
+      deploying: {
+        sound_in: "/audio/deploy_start.mp3",
+        sound_floor: ["/audio/ambient_driving.mp3"],
+      },
+      arriving: {
+        sound_in: "/audio/arrive_start.mp3",
+        sound_floor: ["/audio/ambient_scene.mp3"],
+      },
+      returning: {
+        sound_in: "/audio/return_start.mp3",
+        sound_floor: ["/audio/ambient_return.mp3"],
+      },
+    };
+    setAudioConfigs(audioConfigs as any);
+  }, [setAudioConfigs]);
 
   const handleSettingsChange = (newSettings: Settings) => {
     setSettings(newSettings);
