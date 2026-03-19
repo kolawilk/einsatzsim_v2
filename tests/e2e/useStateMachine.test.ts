@@ -78,10 +78,9 @@ test.describe("useStateMachine Hook", () => {
     await page.getByRole("button", { name: "Weiter →" }).click();
     await page.getByRole("button", { name: "Weiter →" }).click();
 
-    // Check history
-    await expect(
-      page.getByText(/Verlauf: idle → calling → alerting/)
-    ).toBeVisible();
+    // Check history - "Verlauf:" and history text are in separate <p> elements
+    await expect(page.getByText("Verlauf:")).toBeVisible();
+    await expect(page.getByText("idle → calling → alerting")).toBeVisible();
   });
 });
 
