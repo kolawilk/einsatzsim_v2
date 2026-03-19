@@ -106,7 +106,7 @@ export default function TestMissionLoader() {
             
             {result.success ? (
               <div className="space-y-2">
-                <div className="text-green-600 font-medium">✅ Mission loaded successfully</div>
+                <div className="text-green-600 font-medium">✅ Mission erfolgreich geladen</div>
                 <div className="text-sm text-zinc-600">
                   <strong>ID:</strong> {result.data.mission.id}
                 </div>
@@ -122,7 +122,7 @@ export default function TestMissionLoader() {
               </div>
             ) : (
               <div className="space-y-2">
-                <div className="text-red-600 font-medium">❌ Mission failed to load</div>
+                <div className="text-red-600 font-medium">❌ Laden der Mission fehlgeschlagen</div>
                 <div className="bg-red-50 p-4 rounded text-sm font-mono whitespace-pre-wrap">
                   {formatValidationErrors(result.errors)}
                 </div>
@@ -137,7 +137,7 @@ export default function TestMissionLoader() {
           {urlMissionResult ? (
             urlMissionResult.success ? (
               <div className="space-y-2">
-                <div className="text-green-600 font-medium">✅ Mission loaded from URL</div>
+                <div className="text-green-600 font-medium">✅ Mission von URL geladen</div>
                 <div className="text-sm text-zinc-600">
                   <strong>ID:</strong> {urlMissionResult.data.mission.id}
                 </div>
