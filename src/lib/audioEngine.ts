@@ -46,7 +46,7 @@ export class AudioEngine {
    * Preload a single audio file
    */
   public preloadAudio(id: string, src: string): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (this.sounds.has(id)) {
         resolve();
         return;
@@ -60,16 +60,24 @@ export class AudioEngine {
         },
       });
 
+      sound.on("loaderror", (errId, errorMsg) => {
+        console.error(`Failed to load audio ${id}:`, errorMsg);
+        // Reject so caller knows loading failed
+        reject(new Error(`Failed to load audio ${id}: ${errorMsg}`));
+      });
+
       sound.on("loaded", () => {
         this.sounds.set(id, sound);
         resolve();
       });
 
-      sound.on("loaderror", (errId, errorMsg) => {
-        console.warn(`Load warning for ${id}:`, errorMsg);
-        // Still resolve - missing audio is not a blocking error
-        resolve();
-      });
+      // Timeout after 10 seconds to prevent hanging
+      setTimeout(() => {
+        if (!this.sounds.has(id)) {
+          console.error(`Timeout loading audio ${id}`);
+          reject(new Error(`Timeout loading audio ${id}`));
+        }
+      }, 10000);
     });
   }
 
@@ -104,8 +112,13 @@ export class AudioEngine {
       const sound = await this.getOrCreateSound(s);
       if (sound) {
         sound.loop(true).volume(0.7);
-        sound.play();
-        sounds.push(sound);
+        const playId = sound.play();
+        // Check if Howler successfully started the sound
+        if (playId) {
+          sounds.push(sound);
+        } else {
+          console.warn(`Failed to start floor sound: ${s}`);
+        }
       }
     }
 
@@ -196,8 +209,13 @@ export class AudioEngine {
     for (const s of sources) {
       const sound = await this.getOrCreateSound(s);
       if (sound) {
-        sound.play();
-        this.activeSounds.set(`${state}_${layer}`, sound);
+        const playId = sound.play();
+        // Check if Howler successfully started the sound (playId > 0 means success)
+        if (playId !== undefined && playId !== 0) {
+          this.activeSounds.set(`${state}_${layer}`, sound);
+        } else {
+          console.warn(`Failed to start sound: ${s}`);
+        }
       }
     }
 

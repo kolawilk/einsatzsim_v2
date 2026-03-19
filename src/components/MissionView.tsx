@@ -1,6 +1,7 @@
 "use client";
 
 import { useStateMachine } from "@/hooks/useStateMachine";
+import type { StateMachineState } from "@/types";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui";
 import { SettingsDialog, loadSettings, type Settings } from "@/components/ui";
@@ -152,10 +153,10 @@ export function MissionView({
       <div className="mb-8 w-full max-w-md">
         <h3 className="font-semibold mb-2 text-center">Direktwahl:</h3>
         <div className="flex flex-wrap justify-center gap-2">
-          {STATE_SEQUENCE.map((s: string) => (
+          {STATE_SEQUENCE.map((s) => (
             <Button
               key={s}
-              onClick={() => goToState(s)}
+              onClick={() => goToState(s as StateMachineState)}
               variant={state === s ? "default" : "outline"}
               className="flex-1 min-w-[80px]"
             >

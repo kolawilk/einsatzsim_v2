@@ -25,8 +25,17 @@ export function useStateMachine(options: StateMachineOptions = {}) {
   const [state, setState] = useState<StateMachineState>(getInitialState);
   const [history, setHistory] = useState<StateMachineState[]>(["idle"]);
   const historyRef = useRef<StateMachineState[]>(["idle"]);
-  // Use a type assertion since StateConfig requires 'image' but we only care about audio config
-  const [audioConfig, setAudioConfig] = useState<Record<StateMachineState, any>>({
+  // Audio config type for state machine - uses audio-specific properties
+  type AudioConfigEntry = {
+    sound_in?: string | string[];
+    sound_floor?: string | string[];
+    sound_random?: string | string[];
+    sound_sequence?: string | string[];
+    sound_out?: string | string[];
+    auto_advance?: boolean;
+    duration_ms?: number;
+  };
+  const [audioConfig, setAudioConfig] = useState<Record<StateMachineState, AudioConfigEntry>>({
     idle: {},
     calling: {},
     alerting: {},
