@@ -1,0 +1,59 @@
+mission:
+  id: feuerwehr-einsatz-001
+  title: "Feuerwehreinsatz - Brand in Werkstatt"
+  states:
+    idle:
+      image: "/images/feuerwehr.jpg"
+      sound_in: "/audio/call_start.mp3"
+      sound_floor:
+        - "/audio/ambient_idle.mp3"
+      auto_advance: false
+      duration_ms: 5000
+
+    calling:
+      image: "/images/telefon.jpg"
+      sound_in: "/audio/call_received.mp3"
+      sound_floor:
+        - "/audio/ambient_calling.mp3"
+      sound_random:
+        - "/audio/phone_ringing.mp3"
+      auto_advance: true
+      duration_ms: 10000
+
+    alerting:
+      image: "/images/alarm.jpg"
+      sound_in: "/audio/alarm_start.mp3"
+      sound_floor:
+        - "/audio/ambient_alert.mp3"
+      sound_sequence:
+        - "/audio/siren_1.mp3"
+        - "/audio/siren_2.mp3"
+      auto_advance: true
+      duration_ms: 15000
+
+    deploying:
+      image: "/images/feuerwehr_auto.jpg"
+      sound_in: "/audio/deploy_start.mp3"
+      sound_floor:
+        - "/audio/ambient_driving.mp3"
+      sound_random:
+        - "/audio/radio_chat.mp3"
+      auto_advance: true
+      duration_ms: 20000
+
+    arriving:
+      image: "/images/ereignisort.jpg"
+      sound_in: "/audio/arrive_start.mp3"
+      sound_floor:
+        - "/audio/ambient_scene.mp3"
+      auto_advance: true
+      duration_ms: 15000
+
+    returning:
+      image: "/images/zuruck.jpg"
+      sound_in: "/audio/return_start.mp3"
+      sound_floor:
+        - "/audio/ambient_return.mp3"
+      sound_out: "/audio/mission_complete.mp3"
+      auto_advance: false
+      duration_ms: 10000
