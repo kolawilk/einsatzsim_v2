@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useAudio } from '../src/hooks/useAudio';
+import { useAudio } from '@/hooks';
 
+// Mock Audio class
 class MockAudio {
   public src: string = '';
   public currentTime: number = 0;
@@ -85,6 +86,7 @@ describe('useAudio', () => {
       result.current.playSound('/audio/test.mp3');
     });
     
+    // Unmount should not throw
     expect(() => unmount()).not.toThrow();
   });
 

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useStateMachine } from '../src/hooks/useStateMachine';
+import { useStateMachine } from '@/hooks/useStateMachine';
 
 describe('useStateMachine', () => {
   it('should have correct initial state', () => {
