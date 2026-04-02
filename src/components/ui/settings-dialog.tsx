@@ -29,7 +29,7 @@ function loadSettings(): Settings {
     if (stored) {
       const parsed = JSON.parse(stored)
       return {
-autoAdvance: parsed?.autoAdvance ?? false,
+        autoAdvance: parsed?.autoAdvance ?? false,
       }
     }
   } catch (e) {
