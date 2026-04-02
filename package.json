@@ -33,9 +33,9 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@playwright/test": "^1.40.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.0",
+    "jsdom": "^29.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^1.3.1"
