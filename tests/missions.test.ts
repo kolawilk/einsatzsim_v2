@@ -43,16 +43,20 @@ mission:
       const result = loadMissionFromYaml(yaml);
       
       expect(result.success).toBe(true);
-      expect(result.data.mission.id).toBe('test-mission');
-      expect(result.data.mission.title).toBe('Test Mission');
-      expect(Object.keys(result.data.mission.states).length).toBe(6);
+      if (result.success) {
+        expect(result.data.mission.id).toBe('test-mission');
+        expect(result.data.mission.title).toBe('Test Mission');
+        expect(Object.keys(result.data.mission.states).length).toBe(6);
+      }
     });
 
     it('should fail with invalid YAML syntax', () => {
       const result = loadMissionFromYaml('invalid: yaml: [');
       
       expect(result.success).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
+      if (!result.success) {
+        expect(result.errors.length).toBeGreaterThan(0);
+      }
     });
 
     it('should fail with missing required fields', () => {
@@ -69,7 +73,9 @@ mission:
       const result = loadMissionFromYaml(yaml);
       
       expect(result.success).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
+      if (!result.success) {
+        expect(result.errors.length).toBeGreaterThan(0);
+      }
     });
 
     it('should fail with missing states', () => {
@@ -87,7 +93,9 @@ mission:
       const result = loadMissionFromYaml(yaml);
       
       expect(result.success).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
+      if (!result.success) {
+        expect(result.errors.length).toBeGreaterThan(0);
+      }
     });
 
     it('should handle sound fields correctly', () => {
@@ -123,9 +131,11 @@ mission:
       const result = loadMissionFromYaml(yaml);
       
       expect(result.success).toBe(true);
-      expect(result.data.mission.states.idle.sound_floor).toBe('/audio/loop.mp3');
-      expect(Array.isArray(result.data.mission.states.idle.sound_random)).toBe(true);
-      expect(Array.isArray(result.data.mission.states.calling.sound_sequence)).toBe(true);
+      if (result.success) {
+        expect(result.data.mission.states.idle.sound_floor).toBe('/audio/loop.mp3');
+        expect(Array.isArray(result.data.mission.states.idle.sound_random)).toBe(true);
+        expect(Array.isArray(result.data.mission.states.calling.sound_sequence)).toBe(true);
+      }
     });
   });
 
