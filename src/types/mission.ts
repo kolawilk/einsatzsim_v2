@@ -1,5 +1,13 @@
 // Mission types for Einsatzsim v2
 
+export type StateMachineState =
+  | "idle"
+  | "calling"
+  | "alerting"
+  | "deploying"
+  | "arriving"
+  | "returning";
+
 export interface MissionState {
   image: string;
   sound_in?: string | string[];
@@ -15,14 +23,7 @@ export interface Mission {
   id: string;
   title: string;
   description?: string;
-  states: {
-    idle: MissionState;
-    calling: MissionState;
-    alerting: MissionState;
-    deploying: MissionState;
-    arriving: MissionState;
-    returning: MissionState;
-  };
+  states: Record<StateMachineState, MissionState>;
   meta?: {
     version?: string;
     author?: string;
@@ -45,3 +46,16 @@ export type MissionValidationError = {
 export type MissionLoadResult =
   | { success: true; data: LoadedMission }
   | { success: false; errors: MissionValidationError[] };
+
+// State machine context and options (shared types)
+export interface StateMachineContext {
+  state: StateMachineState;
+  history: StateMachineState[];
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
+
+export interface StateMachineOptions {
+  autoAdvance?: boolean;
+  onStateChange?: (state: StateMachineState, previousState: StateMachineState) => void;
+}
