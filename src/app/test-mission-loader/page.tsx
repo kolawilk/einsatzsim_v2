@@ -97,7 +97,7 @@ export default function TestMissionLoader() {
 
   return (
     <div className="min-h-screen bg-zinc-50 p-8">
-      <h1 className="text-3xl font-bold mb-8 text-red-600">🚒 YAML Mission Loader Test</h1>
+      <h1 className="text-3xl font-bold mb-8 text-red-600">🚒 YAML-Einsatzloader-Test</h1>
       
       <div className="space-y-6">
         {results.map(({ name, result }) => (
@@ -133,7 +133,7 @@ export default function TestMissionLoader() {
 
         {/* URL Loading Test */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">🌐 URL Mission Loading</h2>
+          <h2 className="text-xl font-semibold mb-4">🌐 URL-Einsatzlast</h2>
           {urlMissionResult ? (
             urlMissionResult.success ? (
               <div className="space-y-2">
@@ -147,21 +147,21 @@ export default function TestMissionLoader() {
               </div>
             ) : (
               <div className="space-y-2">
-                <div className="text-red-600 font-medium">❌ Failed to load from URL</div>
+                <div className="text-red-600 font-medium">❌ Laden von URL fehlgeschlagen</div>
                 <div className="bg-red-50 p-4 rounded text-sm font-mono whitespace-pre-wrap">
                   {formatValidationErrors(urlMissionResult.errors)}
                 </div>
               </div>
             )
           ) : (
-            <div className="text-zinc-500">Loading from URL...</div>
+            <div className="text-zinc-500">URL wird geladen...</div>
           )}
         </div>
       </div>
 
       {loadedMissions.length > 0 && (
-        <div className="mt-8 bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">📋 Loaded Mission Details</h2>
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-semibold mb-4">📋 Geladene Einsatzdetails</h2>
           <pre className="bg-zinc-100 p-4 rounded text-sm overflow-auto max-h-96">
             {JSON.stringify(loadedMissions[0], null, 2)}
           </pre>

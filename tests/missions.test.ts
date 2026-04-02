@@ -1,5 +1,5 @@
 import { loadMissionFromYaml, formatValidationErrors } from '@/lib/missions';
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect } from 'vitest';
 
 describe('Mission Loader (Unit Tests)', () => {
   describe('loadMissionFromYaml', () => {

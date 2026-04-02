@@ -114,7 +114,11 @@ function validateMission(mission: any, source: string): MissionLoadResult {
 export function loadMissionFromYaml(yamlString: string, source: string = 'inline'): MissionLoadResult {
   try {
     const parsed = yaml.load(yamlString) as any;
-    return validateMission(parsed, source);
+    
+    // Handle the case where YAML has a 'mission' wrapper
+    const mission = parsed.mission || parsed;
+    
+    return validateMission(mission, source);
   } catch (error: any) {
     return {
       success: false,

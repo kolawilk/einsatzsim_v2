@@ -4,9 +4,13 @@
  */
 
 import { loadMissionFromYaml, loadMissionFromUrl } from './missions';
-import { LoadedMission } from '@/types/mission';
+import type { LoadedMission } from '@/types/mission';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as url from 'url';
+
+const __filename = url.fileURLToPath(new URL('.', import.meta.url));
+const __dirname = path.dirname(__filename);
 
 /**
  * Loads a mission from a YAML file path
