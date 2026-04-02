@@ -119,7 +119,10 @@ export function useStateMachine(options: StateMachineOptions = {}) {
 
   const goToIndex = useCallback(
     (index: number) => {
-      if (index < 0 || index >= STATE_SEQUENCE.length) return;
+      if (index < 0 || index >= STATE_SEQUENCE.length) {
+        console.error(`goToIndex: Invalid index ${index}. Valid range: 0-${STATE_SEQUENCE.length - 1}`);
+        return;
+      }
       transitionTo(STATE_SEQUENCE[index]);
     },
     [transitionTo]

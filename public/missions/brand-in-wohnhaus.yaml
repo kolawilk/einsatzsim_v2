@@ -1,0 +1,73 @@
+mission:
+  id: fire-station-1
+  title: 🚒 Einsatz: Brand in Wohnhaus
+  description: Brandmeldeanlage in Mehrfamilienhaus alarmiert
+  meta:
+    version: "2.0"
+    author: Einsatzsim Team
+    created: "2026-03-19"
+    tags:
+      - brand
+      - wohnhaus
+      - mittel
+
+  states:
+    idle:
+      image: /images/station-idle.jpg
+      sound_in: /audio/station-ambient.mp3
+      sound_floor: /audio/station-ambient.mp3
+      sound_random: /audio/radio-chatter.mp3
+      auto_advance: false
+      duration_ms: 5000
+
+    calling:
+      image: /images/station-calling.jpg
+      sound_in: /audio/alarm-bell.mp3
+      sound_floor: /audio/alarm-loop.mp3
+      sound_sequence:
+        - /audio/emergency-call-1.mp3
+        - /audio/emergency-call-2.mp3
+      sound_out: /audio/alarm-stop.mp3
+      auto_advance: true
+      duration_ms: 10000
+
+    alerting:
+      image: /images/alerting.jpg
+      sound_in: /audio/sirens-start.mp3
+      sound_floor: /audio/sirens-loop.mp3
+      sound_random:
+        - /audio/radio-alert-1.mp3
+        - /audio/radio-alert-2.mp3
+        - /audio/radio-alert-3.mp3
+      sound_out: /audio/sirens-stop.mp3
+      auto_advance: true
+      duration_ms: 15000
+
+    deploying:
+      image: /images/deploying.jpg
+      sound_in: /audio/engine-start.mp3
+      sound_floor: /audio/driving-loop.mp3
+      sound_random: /audio/radio-traffic.mp3
+      sound_out: /audio/arriving-sound.mp3
+      auto_advance: true
+      duration_ms: 20000
+
+    arriving:
+      image: /images/scene.jpg
+      sound_in: /audio/arrive-sound.mp3
+      sound_floor: /audio/scene-ambient.mp3
+      sound_random:
+        - /audio/fire-crackling.mp3
+        - /audio/people-shouting.mp3
+      sound_out: /audio/action-start.mp3
+      auto_advance: true
+      duration_ms: 30000
+
+    returning:
+      image: /images/returning.jpg
+      sound_in: /audio/clean-up-start.mp3
+      sound_floor: /audio/driving-loop.mp3
+      sound_random: /audio/radio-quiet.mp3
+      sound_out: /audio/return-complete.mp3
+      auto_advance: true
+      duration_ms: 15000

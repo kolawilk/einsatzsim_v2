@@ -49,6 +49,7 @@ export function MissionView({
     canGoForward,
     STATE_SEQUENCE,
     setAudioConfigs,
+
   } = useStateMachine({
     autoAdvance: settings.autoAdvance,
     onStateChange,

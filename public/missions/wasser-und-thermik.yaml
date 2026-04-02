@@ -1,0 +1,71 @@
+mission:
+  id: wasser-und-thermik
+  title: 💧 Einsatz: Wasserbrand und Thermik
+  description: Brand in Industrieanlage mit Wärmebildkamera
+  meta:
+    version: "2.0"
+    author: Einsatzsim Team
+    created: "2026-03-19"
+    tags:
+      - industrie
+      - wasser
+      - wärme
+
+  states:
+    idle:
+      image: /images/station-idle.jpg
+      sound_in: /audio/station-ambient.mp3
+      sound_floor: /audio/station-ambient.mp3
+      sound_random: /audio/radio-chatter.mp3
+      auto_advance: false
+      duration_ms: 5000
+
+    calling:
+      image: /images/station-calling.jpg
+      sound_in: /audio/alarm-bell.mp3
+      sound_floor: /audio/alarm-loop.mp3
+      sound_sequence:
+        - /audio/emergency-call-industrial.mp3
+      sound_out: /audio/alarm-stop.mp3
+      auto_advance: true
+      duration_ms: 10000
+
+    alerting:
+      image: /images/alerting.jpg
+      sound_in: /audio/sirens-start.mp3
+      sound_floor: /audio/sirens-loop.mp3
+      sound_random:
+        - /audio/radio-alert-industrial.mp3
+        - /audio/radio-alert-warm.mp3
+      sound_out: /audio/sirens-stop.mp3
+      auto_advance: true
+      duration_ms: 15000
+
+    deploying:
+      image: /images/deploying-industrial.jpg
+      sound_in: /audio/engine-start.mp3
+      sound_floor: /audio/driving-loop.mp3
+      sound_random: /audio/radio-industrial-traffic.mp3
+      sound_out: /audio/arriving-sound.mp3
+      auto_advance: true
+      duration_ms: 20000
+
+    arriving:
+      image: /images/scene-industrial.jpg
+      sound_in: /audio/arrive-sound.mp3
+      sound_floor: /audio/scene-industrial.mp3
+      sound_random:
+        - /audio/fire-industrial.mp3
+        - /audio/thermik-search.mp3
+      sound_out: /audio/action-start.mp3
+      auto_advance: true
+      duration_ms: 30000
+
+    returning:
+      image: /images/returning.jpg
+      sound_in: /audio/clean-up-start.mp3
+      sound_floor: /audio/driving-loop.mp3
+      sound_random: /audio/radio-quiet.mp3
+      sound_out: /audio/return-complete.mp3
+      auto_advance: true
+      duration_ms: 15000
